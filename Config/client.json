@@ -1,0 +1,21 @@
+{
+	"host": "localhost",
+	"port": "8000",
+	"mongoDb": {
+		"URI": "mongodb://{$user}:{$password}@{$ip}:27017/{$dbName}",
+		"PORT": "27017"
+	},
+	"s3BucketCredentials" : {
+	"bucket": "",
+	"accessKeyId": "",
+	"secretAccessKey": "",
+	"s3URL": "https://s3-us-west-2.amazonaws.com/{$bucketName}",
+	"folder": {
+		"original": "original",
+		"thumbnail": "thumbnail",
+		"processed": "processed",
+		"thumbnail1080": "thumbnail1080",
+		"thumbnailMed": "thumbnailMed"
+	}
+}
+}
