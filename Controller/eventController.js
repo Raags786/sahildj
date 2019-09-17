@@ -37,6 +37,7 @@ var eventDetail = async (payload) => {
         await writeAndFile();
         var date_element1 = payload.endTime
         let split_varaible1 = date_element1.split(':');
+
         var date_element = payload.startTime
         let split_varaible = date_element.split(':');
         payload.startTime = split_varaible[0] * 3600 + split_varaible[1] * 60;
@@ -111,11 +112,33 @@ var reviewLikes = async (payload, header) => {
         throw err;
     }
 }
+
+
+/**
+ * 
+ * In order to like  request of user
+ * 
+ */
+var requestLikes = async (payload, header) => {
+    console.log("---------check Payload Data------------", payload);
+    console.log("---------check header Data------------", header._id);
+
+    try {
+        var get_dataElement = await DOA.getData(Model.request, { _id: payload.requestId });
+         console.log("==========check result============", get_dataElement[0].likes);
+         var ac = get_dataElement[0].likes.push({userId:header._id}); 
+    }
+
+    catch (err) {   
+        throw err;
+    }
+}
 module.exports =
     {
         eventDetail: eventDetail,
         request: request,
         review: review,
+        requestLikes: requestLikes,
         comment: comment,
         reviewLikes: reviewLikes
     }

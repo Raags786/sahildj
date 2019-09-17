@@ -43,10 +43,11 @@ var artistRegistration = async (payload) => {
       payload.profilePic = newPath
       var sub = "abc";
       var text = 'email:' + payload.emailAddress + 'otp:' + payload.otp;
+      // await commonController.sendemail(payload, sub, text)
       var data1 = await DOA.saveData(Model.artist, payload)
-      await commonController.sendemail(payload, sub, text)
-      let otp_send_to = (payload.countryCode.concat(payload.mobileNumber));
-      await commonController.sendMessage(otp_send_to, payload.otp, "varification code");
+
+      // let otp_send_to = (payload.countryCode.concat(payload.mobileNumber));
+      // await commonController.sendMessage(otp_send_to, payload.otp, "varification code");
       return data1;
     }
   }
@@ -58,10 +59,10 @@ var artistRegistration = async (payload) => {
 var artistlogin = async function (payload) {
   try {
     var user = await DOA.getData(Model.artist, { email: payload.emailAddress }, {})
-       if (user == 0) {
+    if (user == 0) {
       return Config.responseMessages.ERROR.INVALID_CREDENTIALS_EMAIL
     }
-     let checkpassword = bcrypt.compareSync(payload.password, user[0].password);
+    let checkpassword = bcrypt.compareSync(payload.password, user[0].password);
     console.log('--------checkpss------', checkpassword)//it will return true
 
     if (checkpassword == false)
@@ -82,7 +83,7 @@ var artistlogin = async function (payload) {
 var otplogin = async function (payload) {
   try {
 
-    var user = await DOA.getData(Model.artist,{ otp: payload.otp })
+    var user = await DOA.getData(Model.artist, { otp: payload.otp })
     if (user == 0) {
       return Config.responseMessages.ERROR.INVALID_CREDENTIALS_INVALID_OTP
     } else {
@@ -99,9 +100,37 @@ var otplogin = async function (payload) {
   }
 }
 
+//follow /unfollow artist
+var follower = async function (payload, header) {
+  try {
+    console.log("===========paylod==========",payload.option == "FOLLOW");
+    console.log("============header============",header);
+    if (payload.option == "FOLLOW") {
+      var follow_user = await DOA.findAndUpdate(Model.artist, { _id: payload.artistId });
+      console.log("==========result==============",follow_user[0].follower);
+      var ac = follow_user[0].follower.push({ userId: header._id });
+      
+      var following_user = await DOA.getData(Model.artist, { _id: header._id })
+      console.log("==========result==============",following_user[0].follower);
+      var ab = following_user[0].following.push({ userId: payload._id })
+
+    }
+    else {
+      var follow_user = await DOA.getData(Model.artist, { _id: payload.artistId });
+      var ac = follow_user[0].follower.$push({ userId: header._id });
+      var following_user = await DOA.getData(Model.artist, { _id: header._id })
+      var ab = following_user[0].following.$push({ userId: payload._id })
+    }
+  }
+  catch (err) {
+    throw err;
+  }
+}
+
 module.exports =
   {
     artistRegistration: artistRegistration,
     artistlogin: artistlogin,
-    otplogin: otplogin
+    otplogin: otplogin,
+    follower: follower
   }

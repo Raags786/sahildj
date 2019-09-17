@@ -11,8 +11,6 @@ const SCOPE=
     CUSTOMER:"CUSTOMER",
     ADMIN:"ADMIN",
     ARTIST:"ARTIST",
-  
-
 }
 
 var USER={
@@ -24,6 +22,11 @@ const AGENT_TYPE=
     INACTIVE:"Inactive",
     ACTIVE:"active",
     DELETED:"deleted"
+}
+const VAR_MODEL=
+{
+    FOLLOW:"FOLLOW",
+    UNFOLLOW:"UNFOLLOW",
 }
 
 var MODEl=
@@ -44,6 +47,7 @@ var APP_CONSTANTS=
     SERVER: SERVER,
     SCOPE:SCOPE,
     AGENT_TYPE:AGENT_TYPE,
+    VAR_MODEL:VAR_MODEL,
     // MODELS:MODELS,
     // USERS:USERS,
     DATABASE_CONSTANT:DATABASE_CONSTANT

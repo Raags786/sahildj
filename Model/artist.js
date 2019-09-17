@@ -6,13 +6,15 @@ Config= require('../Config')
 
 follower=new Schema({
     userId:{type:Schema.Types.ObjectId,refPath:"artist"},//follower Id
-    isCreated:{type:Date,required:true},
+    isCreated:{type:Date,default:Date.now()},
     status:{
             default: "unfollow",  
-            type:String,enum:["follow","unfollow"]} }),
+            type:String,enum:["follow","unfollow"]} 
+        }),
 
  following=new Schema({
     userId:{type:Schema.Types.ObjectId,refPath:"artist"},
+    isCreated:{type:Date,default:Date.now()},
     status:{
         default: "unfollow",  
         type:String,enum:["follow","unfollow"]} 

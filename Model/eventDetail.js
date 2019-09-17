@@ -3,6 +3,7 @@ const mongoose = require('mongoose'),
 
 Config = require('../Config')
 
+
 const eventDetail = new Schema
     ({
         artistId:  {type:Schema.Types.ObjectId,refPath:"artist"},

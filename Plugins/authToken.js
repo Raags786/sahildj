@@ -17,7 +17,7 @@ exports.plugin = {
             });
      
         server.auth.strategy(Config.APP_CONSTANTS.SCOPE.ARTIST, 'jwt',
-            { key: Config.APP_CONSTANTS.SERVER.JWT_SECRET_KEY_SUPPLIER,          // Never Share your secret key
+            { key: Config.APP_CONSTANTS.SERVER.JWT_SECRET_KEY_ARTIST,          // Never Share your secret key
                 validate: TokenManager.verifyToken, // validate function defined above
                 verifyOptions: { algorithms: [ 'HS256' ],ignoreExpiration:false } // pick a strong algorithm
             });

@@ -55,7 +55,6 @@ var verifyToken = async function verifyToken(tokenData) {
         if(tokenData.scope === Config.APP_CONSTANTS.SCOPE.CUSTOMER) {
             user = await DAO.getData(Models.user,{_id: tokenData._id},{__v : 0,password:0, loginTime: 0},{lean : true});
             console.log(" user ", user);
-
             console.log("------------------vievk-----",user)
 
         }

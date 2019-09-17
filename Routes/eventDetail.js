@@ -210,4 +210,39 @@ module.exports = [
             }
         }
     },
+//
+    {
+        method: 'POST',
+        path: '/event/LikeRequest',
+        options: {
+            description: 'LikeRequest',
+            auth: {
+                    strategies: [Config.APP_CONSTANTS.SCOPE.CUSTOMER]
+                  },
+            tags: ['api', 'user'],
+            handler: (request, reply) => {
+                return Controller.eventController.requestLikes(request.payload,request.auth.credentials)
+                    .then(response => {
+                        return UniversalFunctions.sendSuccess("en", SUCCESS.DEFAULT, response, reply);
+                    })
+                    .catch(error => {
+                        console.log("=====error=============", error);
+                        return UniversalFunctions.sendError("en", error, reply);
+                    });
+            },
+            validate: {
+                payload: {
+                    requestId:Joi.string().required(), 
+                 },
+
+                  failAction: UniversalFunctions.failActionFunction,
+                  headers: UniversalFunctions.authorizationHeaderObj,
+            },
+            plugins: {
+                'hapi-swagger': {
+                    payloadType: 'form'
+                }
+            }
+        }
+    },
 ]

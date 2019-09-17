@@ -22,16 +22,12 @@ const readFile = promisify(fs.readFile);
 //user registration 
 var userRegistration = async (payload) => {
   console.log("---------check Payload Data------------", payload.countryCode, payload.mobileNumber);
-  // let send_to = (payload.countryCode.concat(payload.mobileNumber));
-  // console.log('===============otp result:>>>>>>>>>>>>>>>>>>>>>',send_to);
-
-
   var newPath;
   try {
     console.log('hii----', payload.mobileNumber);
     var query = { email: payload.email }
     let userData = await DOA.getData(Model.user, query);
-    console.log('uuuuuuuuuu', userData[0]);
+    console.log('check user data', userData);
     if (userData != 0) {
       return Config.responseMessages.ERROR.INVALID_CREDENTIALS_EMAIL
     }
@@ -56,10 +52,12 @@ var userRegistration = async (payload) => {
       payload.profilePic = newPath
       var sub = "abc";
       var text = 'email:' + payload.email + 'otp:' + payload.otp;
-      data = await DOA.saveData(Model.user, payload);
       await commonController.sendemail(payload, sub, text);
-      let otp_send_to = (payload.countryCode.concat(payload.mobileNumber));
-      await commonController.sendMessage(otp_send_to, payload.otp, "varification code");
+      data = await DOA.saveData(Model.user, payload);
+      
+      // let otp_send_to = (payload.countryCode.concat(payload.mobileNumber));
+      // console.log('check result=================',otp_send_to);
+      // await commonController.sendMessage(otp_send_to, payload.otp, "varification code");
       return data;
     }
   }
