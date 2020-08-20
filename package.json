@@ -11,7 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "all": "0.0.0",
-    "bcrypt": "^3.0.6",
+    "bcrypt": "^5.0.0",
     "boom": "^6.0.0",
     "hapi": "^18.1.0",
     "hapi-auth-jwt2": "^8.4.0",
